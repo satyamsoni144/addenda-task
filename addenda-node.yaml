@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: addenda-node-app
+  namespace: addenda
+  labels:
+        app: addenda-node-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: addenda-node-app
+  template:
+    metadata:
+      labels:
+        app: addenda-node-app
+    spec:
+      containers:
+      - name: addenda-node-app
+        image: developerrohitkhatri/sample-nodejs-api
+        env:
+        - name: DB_HOST
+          value: "mongodb.addenda"
+        - name: DB_PORT
+          value: "27017"
+        - name: DB_DATABASE
+          value: "sample"
+        - name: DB_USERNAME
+          value: "sample"
+        - name: DB_PASSWORD
+          valueFrom:
+           secretKeyRef:
+             name: addenda-secret
+             key: password
+        ports:
+        - containerPort: 3000

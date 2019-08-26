@@ -1,0 +1,9 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: addenda-ingress
+  namespace: addenda
+spec:
+  backend:
+    serviceName: addenda-svc
+    servicePort: 80
